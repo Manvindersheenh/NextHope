@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"  />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <script>
+     $(document).ready(function(){
+        $("#fetch").click(function(){
+            var email1 = $("#Clientid").val();
+           
+
+            let obj={
+                type: "get",
+                url: "/search-user",
+                data: {
+                    email: email1,
+                    
+                }
+                
+                }
+
+
+
+                $.ajax(obj).then(function(manwinder)  //call back Function- jab response wapis aayega Khushi Khushi
+                {
+                   alert(JSON.stringify(manwinder));
+                   if(manwinder.length==0)
+                   {
+                        alert("Invalid Email Id /Password");
+                        return;
+                   }
+                    else
+                    {
+                        // alert(JSON.stringify(manwinder));
+                        $("#Cname").val(manwinder[0].name);
+                        $("#CFB").val(manwinder[0].business);
+                        $("#Cbprof").val(manwinder[0].bprofile);
+                        $("#Cadd").val(manwinder[0].address);
+                        $("#Ccity").val(manwinder[0].city);
+                        $("#Ccontact").val(manwinder[0].contact);
+                        $("#Cother").val(manwinder[0].info);
+                        $("#Cidprof").val(manwinder[0].idproof);
+                        $("#Cidno").val(manwinder[0].idno);
+                    }
+                }).fail(function(err) //Jab error on server side :-(
+                {
+                    alert(JSON.stringify(err));
+                })
+               
+            })
+        })
+   
+  </script>
+  <body>
+   
+    <div class="container ">
+        <div class="rounded row border border-primary-emphasis border-3">
+    <form class="row g-3" method="post">
+       <center> <h1 class="text-primary-emphasis">Client Profile &nbsp;<i class="fa-solid fa-user fa-flip"></i></h1></center>
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Client ID:</label>
+          <input type="email" class="form-control" id="Clientid" name="clientid" readonly>
+        </div>
+        <div class="col-1">
+         &nbsp;
+          <input type="button" class="form-control btn btn-outline-primary" value="Search" id="fetch">
+        </div>
+        <div class="col-6">
+          <label for="inputAddress" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="Cname" name="Cname" placeholder="Enter your name">
+        </div>
+        <div class="col-6">
+          <label for="inputAddress" class="form-label">Firm/Business</label>
+          <input type="text" class="form-control" id="CFB" name="CFB" >
+        
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Business Profile:</label>
+          <input type="text" class="form-control" id="Cbprof" name="Cbprof">
+        </div>
+        <div class="col-6">
+            <label for="inputAddress2" class="form-label">Address:</label>
+            <input type="text" class="form-control" id="Cadd" name="Cadd" >
+
+        </div>
+        <div class="col-md-6">
+            <label for="validationServer01" class="form-label">City:</label>
+            <input type="text" class="form-control " id="Ccity" name="Ccity">
+            <div class="invalid-feedback">
+                Please provide a valid city.
+              </div>
+        </div>
+        <div class="col-md-5">
+          <label for="inputCity" class="form-label">Contact:</label>
+          <input type="tel" class="form-control" id="Ccontact" name="Ccontact">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Id Proof:</label>
+          <select id="Cidprof" name="Cidprof" class="form-select">
+            <option selected>Select</option>
+            <option>adhar card</option>
+            <option>voter card</option>
+            <option>Government card</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="inputZip" class="form-label">ID Number:</label>
+          <input type="tel" class="form-control" id="Cidno" name="Cidno">
+        </div>
+        <div class="col-md-12">
+            <label for="inputAddress2" class="form-label">Other Info:</label>
+            <textarea class="form-control " name="Cother" id="Cother"></textarea>
+        </div>
+        <center>
+            <div class="col-md-12 ">
+            
+                <button type="submit" class="btn btn-primary" formaction="cl-save ">Save</button>
+                <button type="submit" class="btn btn-danger" formaction="cl-change">Change</button>
+              
+            </div>
+        </center>
+      </form>
+        </div>
+    </div>
+   <br><br><br><br><br><br><br><br>
+    
+  </body>
+</html>
